@@ -4,12 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/COFFEE/BunThitNuong/app/src/main/res/drawable/bg_item_cart.xml" value="0.133" />
+        <entry key="..\:/COFFEE/BunThitNuong/app/src/main/res/drawable/ic_down.xml" value="0.1325" />
         <entry key="..\:/COFFEE/BunThitNuong/app/src/main/res/drawable/ic_hear_red.xml" value="0.133" />
         <entry key="..\:/COFFEE/BunThitNuong/app/src/main/res/drawable/ic_menu.xml" value="0.133" />
         <entry key="..\:/COFFEE/BunThitNuong/app/src/main/res/drawable/ic_menu_line.xml" value="0.133" />
         <entry key="..\:/COFFEE/BunThitNuong/app/src/main/res/drawable/ic_notification.xml" value="0.133" />
         <entry key="..\:/COFFEE/BunThitNuong/app/src/main/res/drawable/ic_plus.xml" value="0.133" />
+        <entry key="..\:/COFFEE/BunThitNuong/app/src/main/res/drawable/ic_plus_item.xml" value="0.1325" />
         <entry key="..\:/COFFEE/BunThitNuong/app/src/main/res/drawable/ic_ring_notification.xml" value="0.133" />
+        <entry key="..\:/COFFEE/BunThitNuong/app/src/main/res/drawable/ic_up.xml" value="0.1325" />
       </map>
     </option>
   </component>
