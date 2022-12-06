@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.customer.common.NavigationDrawer
 import com.example.customer.navigation.Screen
 import dinhtc.android.customer.R
 
@@ -74,7 +75,7 @@ fun HomeScreen(
         ) {
             CustomToolbarHomeScreen(
                 onClickMenu = {
-                    Toast.makeText(vContext,"onClickMenu",Toast.LENGTH_SHORT).show()
+//                    NavigationDrawer(navController)
                 },
                 onClickProcessOrder = {
                     navController.navigate(Screen.ProcessOrderScreen.route)

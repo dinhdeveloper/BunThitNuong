@@ -49,7 +49,7 @@ fun CustomPriceHomeScreen() {
                 .padding(horizontal = 10.dp, vertical = 7.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_plus_item),
+                painter = painterResource(id = R.drawable.ic_minus_item),
                 contentDescription = null,
                 modifier = Modifier
             )
@@ -60,7 +60,7 @@ fun CustomPriceHomeScreen() {
                 modifier = Modifier.padding(horizontal = 10.dp)
             )
             Image(
-                painter = painterResource(id = R.drawable.ic_minus_item),
+                painter = painterResource(id = R.drawable.ic_plus_item),
                 contentDescription = null,
                 modifier = Modifier
             )

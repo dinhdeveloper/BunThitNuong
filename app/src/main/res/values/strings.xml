@@ -14,4 +14,6 @@
     <string name="three">Dried fruit</string>
     <string name="four">Other</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="phoneNumber">Số Điện Thoại</string>
+    <string name="phone_placeholder">Vui lòng nhập số điện thoại</string>
 </resources>

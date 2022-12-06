@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.customer.common.NavigationDrawer
 import com.example.customer.ui.screen.home.HomeScreen
 import com.example.customer.ui.screen.process_order.ProcessOrderScreen
 
@@ -22,6 +23,10 @@ fun NavigationSetup(
 
         composable(Screen.ProcessOrderScreen.route) {
             ProcessOrderScreen(navController)
+        }
+
+        composable(Screen.NavigationDrawer.route) {
+            NavigationDrawer(navController)
         }
 
 
