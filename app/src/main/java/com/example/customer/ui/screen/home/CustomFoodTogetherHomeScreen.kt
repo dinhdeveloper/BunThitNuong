@@ -1,12 +1,15 @@
 package com.example.customer.ui.screen.home
 
+import android.graphics.drawable.Drawable
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -28,6 +31,12 @@ fun PreviewCustomFoodTogetherHomeScreen() {
     CustomFoodTogetherHomeScreen()
 }
 
+@Preview(showBackground = true)
+@Composable
+fun PreviewShowImageChoose() {
+    ShowImageChoose()
+}
+
 
 @Composable
 fun CustomFoodTogetherHomeScreen() {
@@ -41,14 +50,18 @@ fun CustomFoodTogetherHomeScreen() {
 
     }
     LazyRow {
-        items(10) {
-            FoodTogetherItem()
+        items(listFoodTogether.size) {
+            FoodTogetherItem(listFoodTogether[it])
         }
     }
 }
 
 @Composable
-fun FoodTogetherItem() {
+fun FoodTogetherItem(
+    foodTogether: FoodTogerTher
+) {
+    var showWebView by remember { mutableStateOf(false) }
+
     ConstraintLayout(
         modifier = Modifier
             .height(100.dp)
@@ -56,6 +69,9 @@ fun FoodTogetherItem() {
             .padding(horizontal = 10.dp)
             .background(bgTransient)
             .padding(vertical = 20.dp)
+            .clickable {
+                showWebView = true
+            }
     ) {
         val horizontalGuideline25 = createGuidelineFromTop(0.30f)
         val horizontalGuideline75 = createGuidelineFromTop(0.65f)
@@ -74,7 +90,7 @@ fun FoodTogetherItem() {
                 }
         ) {
             Text(
-                text = "Nước Mắm Cay",
+                text = foodTogether.foodName,
                 fontSize = 12.sp,
                 color = Color.Black,
                 maxLines = 2,
@@ -84,16 +100,51 @@ fun FoodTogetherItem() {
                         start.linkTo(parent.start)
                         bottom.linkTo(parent.bottom)
                     }
-                    .padding(10.dp)
+                    .padding(7.dp)
             )
         }
 
         Image(
-            painter = painterResource(id = R.drawable.gia_song), contentDescription = null,
+            painter = painterResource(id = foodTogether.imageFood), contentDescription = null,
             modifier = Modifier.constrainAs(imvProduct) {
                 bottom.linkTo(horizontalGuideline75)
                 end.linkTo(parent.end)
             }
         )
     }
+    if (showWebView) {
+        showWebView = false
+        ShowImageChoose()
+    }
 }
+
+@Composable
+fun ShowImageChoose() {
+    ConstraintLayout(
+        modifier = Modifier
+            .height(100.dp)
+            .width(100.dp)
+            .background(bgTransient)
+    ) {
+        val imvProduct = createRef()
+
+        Image(
+            painter = painterResource(id = R.drawable.ic_outline), contentDescription = null,
+            modifier = Modifier.constrainAs(imvProduct) {
+                bottom.linkTo(parent.bottom)
+                end.linkTo(parent.end)
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+            }
+        )
+    }
+}
+
+data class FoodTogerTher(var id: Int, var foodName: String, var imageFood: Int)
+
+var listFoodTogether = listOf(
+    FoodTogerTher(1, "Nước Mắm Cay", R.drawable.nuoc_mam),
+    FoodTogerTher(2, "Nước Mắm Không Cay", R.drawable.nuoc_mam),
+    FoodTogerTher(3, "Giá Trụng", R.drawable.gia_song),
+    FoodTogerTher(4, "Giá Sống", R.drawable.gia_song),
+)

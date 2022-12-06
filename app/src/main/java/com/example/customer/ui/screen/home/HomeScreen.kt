@@ -1,12 +1,13 @@
 package com.example.customer.ui.screen.home
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -24,7 +25,11 @@ import dinhtc.android.customer.R
 fun HomeScreen(
     navController: NavController
 ) {
-    val vContext = LocalContext.current
+    val mContext = LocalContext.current
+
+    var textCountAll by remember { mutableStateOf(1) }
+    var textMoneySize by remember { mutableStateOf(30000) }
+
     ConstraintLayout {
         val horizontalGuide25 = createGuidelineFromTop(0.25f)
         val horizontalGuide50 = createGuidelineFromTop(0.50f)
@@ -106,7 +111,14 @@ fun HomeScreen(
                 }
                 .padding(start = 20.dp, end = 20.dp, top = 10.dp)
         ) {
-            CustomPriceHomeScreen()
+            CustomPriceHomeScreen(
+                textMoneySize,
+                onClickMinus = {
+                    textCountAll = it
+                },
+                onClickPlus = {
+                    textCountAll = it
+                })
         }
 
         Column(
@@ -119,7 +131,18 @@ fun HomeScreen(
                 }
                 .padding(start = 20.dp, end = 20.dp, top = 10.dp)
         ) {
-            CustomSizeFoodHomeScreen()
+            CustomSizeFoodHomeScreen(
+                textCountAll,
+                setMoneySizeS = {
+                    textMoneySize = it
+                },
+                setMoneySizeM = {
+                    textMoneySize = it
+                },
+                setMoneySizeL = {
+                    textMoneySize = it
+                }
+            )
         }
 
 
@@ -130,9 +153,10 @@ fun HomeScreen(
                     top.linkTo(sizeFood.bottom)
                     start.linkTo(parent.start)
                 }
-                .padding(start = 20.dp, end = 20.dp, top = 20.dp)
+                .padding(start = 25.dp, end = 25.dp, top = 20.dp)
         ) {
-            CustomFoodTogetherHomeScreen()
+            //CustomFoodTogetherHomeScreen()
+            CustomTimeHomeScreen()
         }
 
         Column(
@@ -144,7 +168,7 @@ fun HomeScreen(
                 }
                 .padding(start = 20.dp, end = 20.dp, top = 20.dp)
         ) {
-            CustomTimeHomeScreen()
+            CustomFoodOtherScreen()
         }
     }
 }

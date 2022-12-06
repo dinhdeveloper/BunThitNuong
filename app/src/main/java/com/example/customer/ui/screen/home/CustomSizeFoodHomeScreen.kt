@@ -2,12 +2,13 @@ package com.example.customer.ui.screen.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.customer.common.format.FormatNumber
 import com.example.customer.ui.theme.*
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.placeholder
@@ -26,13 +28,39 @@ import com.google.accompanist.placeholder.shimmer
 @Preview(showBackground = true)
 @Composable
 fun PreviewCustomSizeFoodHomeScreen() {
-    CustomSizeFoodHomeScreen()
+    CustomSizeFoodHomeScreen(30000,
+        setMoneySizeS = {
+
+        },
+        setMoneySizeM = {
+
+        },
+        setMoneySizeL = {
+
+        }
+    )
 }
 
 
 @Composable
-fun CustomSizeFoodHomeScreen() {
+fun CustomSizeFoodHomeScreen(
+    textCountAll: Int,
+    setMoneySizeS: (Int) -> Unit,
+    setMoneySizeM: (Int) -> Unit,
+    setMoneySizeL: (Int) -> Unit,
+) {
+    val moneyS = 30000
+    val moneyM = 35000
+    val moneyL = 40000
     Row {
+        var colorSizeS by remember { mutableStateOf(colorButtonChoose) }
+        var colorSizeM by remember { mutableStateOf(Gray) }
+        var colorSizeL by remember { mutableStateOf(Gray) }
+
+        var stateSizeS by remember { mutableStateOf(true) }
+        var stateSizeM by remember { mutableStateOf(false) }
+        var stateSizeL by remember { mutableStateOf(false) }
+
         //phan nho
         Column(
             verticalArrangement = Arrangement.Center,
@@ -44,10 +72,25 @@ fun CustomSizeFoodHomeScreen() {
                 .weight(1f)
                 .border(
                     1.dp,
-                    colorButtonChoose,
+                    colorSizeS,
                     shape = RoundedCornerShape(6.dp)
                 )
                 .padding(horizontal = 5.dp)
+                .clickable {
+                    stateSizeS = true
+                    stateSizeM = false
+                    stateSizeL = false
+
+                    if (stateSizeS && !stateSizeM && !stateSizeL) {
+                        colorSizeS = colorButtonChoose
+
+                        colorSizeM = Gray
+                        colorSizeL = Gray
+
+                        setMoneySizeS(moneyS)
+                    }
+
+                }
         ) {
             Box(
                 contentAlignment = Alignment.Center,
@@ -55,7 +98,7 @@ fun CustomSizeFoodHomeScreen() {
                     .clip(CircleShape)
                     .border(
                         width = 1.dp,
-                        color = colorButtonChoose.copy(alpha = 0.5f),
+                        color = colorSizeS.copy(alpha = 0.5f),
                         shape = CircleShape,
                     )
                     .padding(5.dp)
@@ -80,7 +123,12 @@ fun CustomSizeFoodHomeScreen() {
             )
 
             Text(
-                text = "100.000 VNĐ",
+                text =
+                if (stateSizeS) {
+                    FormatNumber.formatMoney((textCountAll * moneyS).toString())
+                }else{
+                    FormatNumber.formatMoney((moneyS).toString())
+                },
                 fontFamily = FontFamily.Default,
                 textAlign = TextAlign.Center,
                 fontSize = 15.sp,
@@ -100,10 +148,24 @@ fun CustomSizeFoodHomeScreen() {
                 .weight(1f)
                 .border(
                     1.dp,
-                    Gray,
+                    colorSizeM,
                     shape = RoundedCornerShape(6.dp)
                 )
                 .padding(horizontal = 5.dp)
+                .clickable {
+                    stateSizeS = false
+                    stateSizeM = true
+                    stateSizeL = false
+
+                    if (!stateSizeS && stateSizeM && !stateSizeL) {
+                        colorSizeM = colorButtonChoose
+
+                        colorSizeS = Gray
+                        colorSizeL = Gray
+
+                        setMoneySizeM(moneyM)
+                    }
+                }
         ) {
             Box(
                 contentAlignment = Alignment.Center,
@@ -111,7 +173,7 @@ fun CustomSizeFoodHomeScreen() {
                     .clip(CircleShape)
                     .border(
                         width = 1.dp,
-                        color = MaterialTheme.colors.onBackground.copy(alpha = 0.1f),
+                        color = colorSizeM,
                         shape = CircleShape,
                     )
                     .padding(5.dp)
@@ -136,7 +198,12 @@ fun CustomSizeFoodHomeScreen() {
             )
 
             Text(
-                text = "150.000 VNĐ",
+                text =
+                if (stateSizeM) {
+                    FormatNumber.formatMoney((textCountAll * moneyM).toString())
+                }else{
+                    FormatNumber.formatMoney((moneyM).toString())
+                },
                 fontFamily = FontFamily.Default,
                 textAlign = TextAlign.Center,
                 fontSize = 15.sp,
@@ -156,10 +223,24 @@ fun CustomSizeFoodHomeScreen() {
                 .height(130.dp)
                 .border(
                     1.dp,
-                    Gray,
+                    colorSizeL,
                     shape = RoundedCornerShape(6.dp)
                 )
                 .padding(horizontal = 5.dp)
+                .clickable {
+                    stateSizeS = false
+                    stateSizeM = false
+                    stateSizeL = true
+
+                    if (!stateSizeS && !stateSizeM && stateSizeL) {
+                        colorSizeL = colorButtonChoose
+
+                        colorSizeS = Gray
+                        colorSizeM = Gray
+
+                        setMoneySizeL(moneyL)
+                    }
+                }
         ) {
             Box(
                 contentAlignment = Alignment.Center,
@@ -167,7 +248,7 @@ fun CustomSizeFoodHomeScreen() {
                     .clip(CircleShape)
                     .border(
                         width = 1.dp,
-                        color = MaterialTheme.colors.onBackground.copy(alpha = 0.1f),
+                        color = colorSizeL,
                         shape = CircleShape,
                     )
                     .padding(5.dp)
@@ -192,7 +273,12 @@ fun CustomSizeFoodHomeScreen() {
             )
 
             Text(
-                text = "200.000 VNĐ",
+                text =
+                if (stateSizeL) {
+                    FormatNumber.formatMoney((textCountAll * moneyL).toString())
+                }else{
+                    FormatNumber.formatMoney((moneyL).toString())
+                },
                 fontFamily = FontFamily.Default,
                 textAlign = TextAlign.Center,
                 fontSize = 15.sp,
