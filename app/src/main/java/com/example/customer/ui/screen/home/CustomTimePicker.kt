@@ -38,7 +38,7 @@ fun CustomTimePicker(
             .background(bgMainWhile)
             .padding(end = 5.dp)
             .fillMaxWidth()
-            .height(50.dp)
+            .height(40.dp)
             .border(
                 1.dp,
                 colorButtonChoose,

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "186186503332",
+    "project_id": "bunthitnuong-39386",
+    "storage_bucket": "bunthitnuong-39386.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186186503332:android:dcd71b6021787a4db60231",
+        "android_client_info": {
+          "package_name": "dinhtc.android.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "186186503332-br30iumbfcj1g5lscjk7vau1sltfvoor.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dinhtc.android.customer",
+            "certificate_hash": "f36b76e762a0f16dc213a0b81d1fca62767fe133"
+          }
+        },
+        {
+          "client_id": "186186503332-qn3p5cis4r17q2gb2amhrmonvfm3roe2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-mpw4Vy5xnOwaexywtnkaM2tCXPvVh6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "186186503332-qn3p5cis4r17q2gb2amhrmonvfm3roe2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

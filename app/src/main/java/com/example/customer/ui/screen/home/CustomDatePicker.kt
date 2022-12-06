@@ -36,7 +36,7 @@ fun CustomDatePicker(
             .background(bgMainWhile)
             .padding(start = 5.dp)
             .fillMaxWidth()
-            .height(50.dp)
+            .height(40.dp)
             .border(
                 1.dp,
                 colorButtonChoose,

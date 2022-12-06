@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.*
@@ -32,15 +33,8 @@ fun HomeScreen(
 
     ConstraintLayout {
         val horizontalGuide25 = createGuidelineFromTop(0.25f)
-        val horizontalGuide50 = createGuidelineFromTop(0.50f)
         val (
-            imgBgMain,
-            toolbarHome,
-            titleHome,
-            priceHome,
-            chooseFood,
-            sizeFood,
-            chooseTime,
+            imgBgMain
         ) = createRefs()
 
         //background
@@ -56,119 +50,90 @@ fun HomeScreen(
                 }
                 .fillMaxSize()
         )
-        //bottomSheet
-//        Column(
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            modifier = Modifier
-//                .constrainAs(bottomSheet) {
-//                    bottom.linkTo(parent.bottom)
-//                    end.linkTo(parent.end)
-//                    start.linkTo(parent.start)
-//                }
-//        ) {
-//            CustomBottomSheetHomeScreen()
-//        }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .constrainAs(toolbarHome) {
-                    top.linkTo(parent.top)
-                    end.linkTo(parent.end)
-                }
-                .padding(20.dp)
-        ) {
-            CustomToolbarHomeScreen(
-                onClickMenu = {
+        LazyColumn{
+            item {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .padding(20.dp)
+                ) {
+                    CustomToolbarHomeScreen(
+                        onClickMenu = {
 //                    NavigationDrawer(navController)
-                },
-                onClickProcessOrder = {
-                    navController.navigate(Screen.ProcessOrderScreen.route)
+                        },
+                        onClickProcessOrder = {
+                            navController.navigate(Screen.ProcessOrderScreen.route)
+                        }
+                    )
                 }
-            )
-        }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .constrainAs(titleHome) {
-                    top.linkTo(toolbarHome.bottom)
-                    end.linkTo(parent.end)
-                    start.linkTo(parent.start)
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .padding(start = 20.dp, end = 20.dp, top = 10.dp)
+                        .fillMaxWidth()
+                ) {
+                    CustomTitleHomeScreen()
                 }
-                .padding(start = 20.dp, end = 20.dp, top = 10.dp)
-        ) {
-            CustomTitleHomeScreen()
-        }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .constrainAs(priceHome) {
-                    top.linkTo(titleHome.bottom)
-                    end.linkTo(parent.end)
-                    start.linkTo(parent.start)
-                }
-                .padding(start = 20.dp, end = 20.dp, top = 10.dp)
-        ) {
-            CustomPriceHomeScreen(
-                textMoneySize,
-                onClickMinus = {
-                    textCountAll = it
-                },
-                onClickPlus = {
-                    textCountAll = it
-                })
-        }
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .constrainAs(sizeFood) {
-                    top.linkTo(priceHome.bottom)
-                    end.linkTo(parent.end)
-                    start.linkTo(parent.start)
+                        .padding(start = 20.dp, end = 20.dp, top = 10.dp)
+                        .fillMaxWidth()
+                ) {
+                    CustomPriceHomeScreen(
+                        textMoneySize,
+                        onClickMinus = {
+                            textCountAll = it
+                        },
+                        onClickPlus = {
+                            textCountAll = it
+                        })
                 }
-                .padding(start = 20.dp, end = 20.dp, top = 10.dp)
-        ) {
-            CustomSizeFoodHomeScreen(
-                textCountAll,
-                setMoneySizeS = {
-                    textMoneySize = it
-                },
-                setMoneySizeM = {
-                    textMoneySize = it
-                },
-                setMoneySizeL = {
-                    textMoneySize = it
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .padding(start = 20.dp, end = 20.dp, top = 10.dp)
+                        .fillMaxWidth()
+                ) {
+                    CustomSizeFoodHomeScreen(
+                        textCountAll,
+                        setMoneySizeS = {
+                            textMoneySize = it
+                        },
+                        setMoneySizeM = {
+                            textMoneySize = it
+                        },
+                        setMoneySizeL = {
+                            textMoneySize = it
+                        }
+                    )
                 }
-            )
-        }
 
 
-        Column(
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .constrainAs(chooseFood) {
-                    top.linkTo(sizeFood.bottom)
-                    start.linkTo(parent.start)
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier
+                        .padding(start = 25.dp, end = 25.dp, top = 20.dp)
+                        .fillMaxWidth()
+                ) {
+                    //CustomFoodTogetherHomeScreen()
+                    CustomTimeHomeScreen()
                 }
-                .padding(start = 25.dp, end = 25.dp, top = 20.dp)
-        ) {
-            //CustomFoodTogetherHomeScreen()
-            CustomTimeHomeScreen()
-        }
 
-        Column(
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .constrainAs(chooseTime) {
-                    top.linkTo(chooseFood.bottom)
-                    start.linkTo(parent.start)
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier
+                        .padding(start = 20.dp, end = 20.dp, top = 20.dp)
+                        .fillMaxWidth()
+
+                ) {
+                    CustomFoodOtherScreen()
                 }
-                .padding(start = 20.dp, end = 20.dp, top = 20.dp)
-        ) {
-            CustomFoodOtherScreen()
+            }
         }
     }
 }
