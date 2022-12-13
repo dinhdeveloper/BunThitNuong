@@ -1,5 +1,6 @@
 package com.example.customer.navigation
 
+import com.example.customer.navigation.RouterNav.Companion.CARD_BAG_SCREEN
 import com.example.customer.navigation.RouterNav.Companion.HOME_MAIN_SCREEN
 import com.example.customer.navigation.RouterNav.Companion.PROCESS_ORDER_SRCEEN
 import com.example.customer.navigation.RouterNav.Companion.NAVIGATION_DRAWER
@@ -15,4 +16,5 @@ sealed class Screen(val route: String) {
     object Home : Screen(HOME_MAIN_SCREEN)
     object ProcessOrderScreen : Screen(PROCESS_ORDER_SRCEEN)
     object NavigationDrawer : Screen(NAVIGATION_DRAWER)
+    object CartBagScreen : Screen(CARD_BAG_SCREEN)
 }

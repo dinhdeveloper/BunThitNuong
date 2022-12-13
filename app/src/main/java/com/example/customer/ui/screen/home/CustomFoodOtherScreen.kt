@@ -1,15 +1,21 @@
 package com.example.customer.ui.screen.home
 
-import androidx.compose.foundation.BorderStroke
+import android.annotation.SuppressLint
+import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
@@ -17,65 +23,91 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.customer.model.FoodOtherModel
 import com.example.customer.ui.theme.*
-
+import com.example.customer.viewmodel.ShareViewModel
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewCustomFoodOtherScreen() {
-    CustomFoodOtherScreen()
+    //CustomFoodOtherScreen()
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
-fun CustomFoodOtherScreen() {
-    val colorSelected = remember {
-        mutableStateOf(bgMainWhile)
+fun CustomFoodOtherScreen(
+    dataFood: List<FoodOtherModel>,
+    onClick: (FoodOtherModel) -> Unit,
+    shareViewModel: ShareViewModel
+) {
+    val itemSelected = remember {
+        mutableStateOf<FoodOtherModel?>(null)
     }
-    val textColorSelected = remember {
-        mutableStateOf(Black)
+
+    val myItems = mutableStateListOf<FoodOtherModel>()
+        .apply {
+            repeat(6) {
+                add(FoodOtherModel(id = it, name = dataFood[it].name))
+            }
+        }
+
+    fun getSelectedItems() = myItems.filter { it.isSelected }
+
+    fun toggleSelection(index: Int) {
+
+        val item = myItems[index]
+        val isSelected = item.isSelected
+
+        if (isSelected) {
+            myItems[index] = item.copy(isSelected = false)
+            itemSelected.value = item.copy(isSelected = false)
+            shareViewModel.removeDataListFood(myItems[index].name)
+        } else {
+            itemSelected.value = item.copy(isSelected = true)
+            myItems[index] = item.copy(isSelected = true)
+            shareViewModel.addDataListFood(myItems[index].name)
+        }
     }
 
-    Column {
-        Text(
-            text = "Chọn Món Kèm Theo",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black.copy(alpha = 0.6f)
-        )
+    Text(
+        text = "Chọn Món Kèm Theo",
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.Black.copy(alpha = 0.6f)
+    )
 
-        val animations = listOf(
-            "Nước Mắm Cay",
-            "Nước Mắm Thường",
-            "Giá Sống",
-            "Giá Trụng",
-            "Rau Đầy Đủ",
-            "Không Rau"
-        )
-        var animationIndex by remember { mutableStateOf(true) }
-        VerticalGrid(columns = 2, modifier = Modifier.padding(vertical = 12.dp)) {
-            animations.forEachIndexed { index, title ->
-                Button(
-                    onClick = {
-                        if (animationIndex) {
-                            colorSelected.value = colorButtonChoose
-                            textColorSelected.value = bgMainWhile
-                        } else {
-                            colorSelected.value = bgMainWhile
-                            textColorSelected.value = Black
-                        }
-                        animationIndex = !animationIndex
+    VerticalGrid(columns = 1, modifier = Modifier.padding(vertical = 12.dp)) {
+        myItems.forEachIndexed { index, items ->
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)
+                    .border(
+                        width = 1.dp,
+                        color = colorButtonChoose,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .clickable {
+                        toggleSelection(index)
+                        onClick(items)
+                    }
+                    .padding(10.dp)
+            ) {
+                Text(items.name, color = Black, fontSize = 15.sp)
 
-                    },
-                    border = BorderStroke(1.dp, colorButtonChoose),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorSelected.value),
-                    modifier = Modifier
-                        .padding(5.dp),
-                    shape = CircleShape
-                ) {
-                    Text(text = "$title", color = textColorSelected.value, fontSize = 13.sp)
+                if (items.isSelected) {
+                    Icon(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .background(bgMainWhile, CircleShape),
+                        imageVector = Icons.Default.Check,
+                        contentDescription = "Selected",
+                        tint = colorButtonChoose,
+                    )
                 }
             }
         }
+        val selectedItems = getSelectedItems().map { it.name }
     }
 }
 

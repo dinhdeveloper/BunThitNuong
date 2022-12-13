@@ -8,5 +8,6 @@ open class RouterNav {
         const val HOME_MAIN_SCREEN = "HOME_MAIN_SCREEN"
         const val PROCESS_ORDER_SRCEEN = "PROCESS_ORDER_SRCEEN"
         const val NAVIGATION_DRAWER = "NAVIGATION_DRAWER"
+        const val CARD_BAG_SCREEN = "CARD_BAG_SCREEN"
     }
 }

@@ -1,35 +1,41 @@
 package com.example.customer.ui.screen.home
 
 import android.util.Log
-import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.customer.common.NavigationDrawer
+import com.example.customer.model.FoodChooseModel
+import com.example.customer.model.FoodOtherModel
 import com.example.customer.navigation.Screen
+import com.example.customer.ui.theme.bgOgran
+import com.example.customer.viewmodel.ShareViewModel
 import dinhtc.android.customer.R
 
 @Composable
 fun HomeScreen(
-    navController: NavController
+    navController: NavController,
+    shareViewModel: ShareViewModel
 ) {
-    val mContext = LocalContext.current
-
     var textCountAll by remember { mutableStateOf(1) }
     var textMoneySize by remember { mutableStateOf(30000) }
+    var statusFoodSize by remember { mutableStateOf("Phần Nhỏ") }
+    val foodOtherChoose = remember { mutableStateListOf<FoodChooseModel?>(null) }
 
     ConstraintLayout {
         val horizontalGuide25 = createGuidelineFromTop(0.25f)
@@ -50,7 +56,7 @@ fun HomeScreen(
                 }
                 .fillMaxSize()
         )
-        LazyColumn{
+        LazyColumn {
             item {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -90,7 +96,9 @@ fun HomeScreen(
                         },
                         onClickPlus = {
                             textCountAll = it
-                        })
+                        }
+                    )
+
                 }
 
                 Column(
@@ -103,12 +111,15 @@ fun HomeScreen(
                         textCountAll,
                         setMoneySizeS = {
                             textMoneySize = it
+                            statusFoodSize = "Phần Nhỏ"
                         },
                         setMoneySizeM = {
                             textMoneySize = it
+                            statusFoodSize = "Phần Vừa"
                         },
                         setMoneySizeL = {
                             textMoneySize = it
+                            statusFoodSize = "Phần Lớn"
                         }
                     )
                 }
@@ -120,7 +131,6 @@ fun HomeScreen(
                         .padding(start = 25.dp, end = 25.dp, top = 20.dp)
                         .fillMaxWidth()
                 ) {
-                    //CustomFoodTogetherHomeScreen()
                     CustomTimeHomeScreen()
                 }
 
@@ -131,7 +141,44 @@ fun HomeScreen(
                         .fillMaxWidth()
 
                 ) {
-                    CustomFoodOtherScreen()
+                    CustomFoodOtherScreen(
+                        foodOther,
+                        onClick = {
+
+                        },
+                        shareViewModel
+                    )
+                }
+
+                //thanh toan
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier
+                        .padding(start = 20.dp, end = 20.dp, top = 10.dp, bottom = 20.dp)
+                        .fillMaxWidth()
+
+                ) {
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 5.dp)
+                            .height(40.dp),
+                        onClick = {
+                            Log.d("SSSSSSSSSSSSSSS", "$statusFoodSize")
+                            Log.e("SSSSSSSSSSSSSSS", "$textCountAll")
+                            Log.d("SSSSSSSSSSSSSSS", "${textMoneySize * textCountAll}")
+                            //navController.navigate(Screen.CartBagScreen.route)
+                        },
+                        border = BorderStroke(1.dp, bgOgran),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Red)
+                    ) {
+                        Text(
+                            text = "Thanh Toán",
+                            color = bgOgran,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp
+                        )
+                    }
                 }
             }
         }
@@ -141,5 +188,27 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewHomeScreen() {
-    HomeScreen(navController = rememberNavController())
+    HomeScreen(navController = rememberNavController(), ShareViewModel())
 }
+
+@Preview(showBackground = true, widthDp = 700)
+@Composable
+fun PreviewHomeScreen1() {
+    HomeScreen(navController = rememberNavController(),ShareViewModel())
+}
+
+@Preview(showBackground = true, widthDp = 1000)
+@Composable
+fun PreviewHomeScreen2() {
+    HomeScreen(navController = rememberNavController(),ShareViewModel())
+}
+
+
+val foodOther = listOf(
+    FoodOtherModel(1, "Nước Mắm Cay"),
+    FoodOtherModel(2, "Nước Mắm Thường"),
+    FoodOtherModel(3, "Giá Sống"),
+    FoodOtherModel(4, "Giá Trụng"),
+    FoodOtherModel(5, "Rau Đầy Đủ"),
+    FoodOtherModel(6, "Không Rau")
+)
