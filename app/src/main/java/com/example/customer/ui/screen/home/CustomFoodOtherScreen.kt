@@ -37,7 +37,6 @@ fun PreviewCustomFoodOtherScreen() {
 @Composable
 fun CustomFoodOtherScreen(
     dataFood: List<FoodOtherModel>,
-    onClick: (FoodOtherModel) -> Unit,
     shareViewModel: ShareViewModel
 ) {
     val itemSelected = remember {
@@ -89,7 +88,6 @@ fun CustomFoodOtherScreen(
                     )
                     .clickable {
                         toggleSelection(index)
-                        onClick(items)
                     }
                     .padding(10.dp)
             ) {

@@ -33,7 +33,7 @@ fun NavigationSetup(
         }
 
         composable(Screen.CartBagScreen.route) {
-            CartBagScreen(navController)
+            CartBagScreen(navController,shareViewModel)
         }
     }
 }

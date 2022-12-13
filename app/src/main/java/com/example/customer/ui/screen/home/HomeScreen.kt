@@ -22,9 +22,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.customer.model.FoodChooseModel
 import com.example.customer.model.FoodOtherModel
+import com.example.customer.model.ViewOrderFoodModel
 import com.example.customer.navigation.Screen
 import com.example.customer.ui.theme.bgOgran
 import com.example.customer.viewmodel.ShareViewModel
+import com.google.gson.Gson
 import dinhtc.android.customer.R
 
 @Composable
@@ -131,7 +133,9 @@ fun HomeScreen(
                         .padding(start = 25.dp, end = 25.dp, top = 20.dp)
                         .fillMaxWidth()
                 ) {
-                    CustomTimeHomeScreen()
+                    CustomTimeHomeScreen(
+                        shareViewModel
+                    )
                 }
 
                 Column(
@@ -143,9 +147,6 @@ fun HomeScreen(
                 ) {
                     CustomFoodOtherScreen(
                         foodOther,
-                        onClick = {
-
-                        },
                         shareViewModel
                     )
                 }
@@ -164,10 +165,22 @@ fun HomeScreen(
                             .padding(horizontal = 5.dp)
                             .height(40.dp),
                         onClick = {
-                            Log.d("SSSSSSSSSSSSSSS", "$statusFoodSize")
-                            Log.e("SSSSSSSSSSSSSSS", "$textCountAll")
-                            Log.d("SSSSSSSSSSSSSSS", "${textMoneySize * textCountAll}")
-                            //navController.navigate(Screen.CartBagScreen.route)
+                            var timePicker =
+                                "${shareViewModel.dataTimePicker.value?.mHour}-${shareViewModel.dataTimePicker.value?.mMinius}-${shareViewModel.dataTimePicker.value?.mTimeSet}"
+
+                            var datePicker =
+                                "${shareViewModel.dataDatePicker.value?.mDay}-${shareViewModel.dataDatePicker.value?.mMonth}-${shareViewModel.dataDatePicker.value?.mYear}"
+                            var orderFood = ViewOrderFoodModel(
+                                statusFoodSize,
+                                textCountAll,
+                                textMoneySize * textCountAll,
+                                shareViewModel.dataListFood,
+                                timePicker,
+                                datePicker
+                            )
+
+                            shareViewModel.shareOrderFood(orderFood)
+                            navController.navigate(Screen.CartBagScreen.route)
                         },
                         border = BorderStroke(1.dp, bgOgran),
                         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Red)
@@ -194,13 +207,13 @@ fun PreviewHomeScreen() {
 @Preview(showBackground = true, widthDp = 700)
 @Composable
 fun PreviewHomeScreen1() {
-    HomeScreen(navController = rememberNavController(),ShareViewModel())
+    HomeScreen(navController = rememberNavController(), ShareViewModel())
 }
 
 @Preview(showBackground = true, widthDp = 1000)
 @Composable
 fun PreviewHomeScreen2() {
-    HomeScreen(navController = rememberNavController(),ShareViewModel())
+    HomeScreen(navController = rememberNavController(), ShareViewModel())
 }
 
 

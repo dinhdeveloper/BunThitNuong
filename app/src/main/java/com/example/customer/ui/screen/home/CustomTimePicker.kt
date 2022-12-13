@@ -21,10 +21,12 @@ import androidx.compose.ui.unit.sp
 import com.example.customer.ui.theme.Black
 import com.example.customer.ui.theme.bgMainWhile
 import com.example.customer.ui.theme.colorButtonChoose
+import com.example.customer.viewmodel.ShareViewModel
 
 @Composable
 fun CustomTimePicker(
-    mHour: Int, mMinute: Int, mTimeSet: String
+    mHour: Int, mMinute: Int, mTimeSet: String,
+    shareViewModel: ShareViewModel
 ) {
     var showDiaLogTime by remember { mutableStateOf(false) }
     val sHour = remember { mutableStateOf("$mHour") }
@@ -135,6 +137,7 @@ fun CustomTimePicker(
                     timeSet.value = "PM"
                 }
 
+                shareViewModel.setTimePicker(mHour, mMinute, mTimeSet)
             }, mHour, mMinute, false
         )
 

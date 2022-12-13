@@ -18,11 +18,13 @@ import androidx.compose.ui.unit.sp
 import com.example.customer.ui.theme.Black
 import com.example.customer.ui.theme.bgMainWhile
 import com.example.customer.ui.theme.colorButtonChoose
+import com.example.customer.viewmodel.ShareViewModel
 import java.util.*
 
 @Composable
 fun CustomDatePicker(
-    mYear: Int, mMonth: Int, mDay: Int
+    mYear: Int, mMonth: Int, mDay: Int,
+    shareViewModel: ShareViewModel
 ) {
     var showDiaLogDate by remember { mutableStateOf(false) }
     val sDate = remember { mutableStateOf("$mDay") }
@@ -132,6 +134,7 @@ fun CustomDatePicker(
                 sDate.value = "$mDayOfMonth"
                 sMouth.value = "$mMonth"
                 sYear.value = "$mYear"
+                shareViewModel.setDatePicker(mYear, mMonth, mDay)
             }, mYear, mMonth, mDay
         )
         mDatePickerDialog.datePicker.minDate = mCalendar.timeInMillis

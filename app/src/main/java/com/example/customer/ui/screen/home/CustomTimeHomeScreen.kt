@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.customer.ui.theme.*
+import com.example.customer.viewmodel.ShareViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,11 +27,13 @@ import java.util.*
 @Preview(showBackground = true)
 @Composable
 fun PreviewCustomTimeHomeScreen() {
-    CustomTimeHomeScreen()
+
 }
 
 @Composable
-fun CustomTimeHomeScreen() {
+fun CustomTimeHomeScreen(
+    shareViewModel: ShareViewModel
+) {
 
     val mYear: Int
     val mMonth: Int
@@ -70,11 +73,11 @@ fun CustomTimeHomeScreen() {
         ) {
             //time
             Column(Modifier.weight(1f)) {
-                CustomTimePicker(mHour, mMinius, mTimeSet)
+                CustomTimePicker(mHour, mMinius, mTimeSet,shareViewModel)
             }
             //date
             Column(Modifier.weight(1f)) {
-                CustomDatePicker(mYear, mMonth, mDay)
+                CustomDatePicker(mYear, mMonth, mDay,shareViewModel)
             }
 
         }

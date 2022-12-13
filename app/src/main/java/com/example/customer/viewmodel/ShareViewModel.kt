@@ -1,16 +1,11 @@
 package com.example.customer.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import com.example.customer.model.DatePickerModel
+import com.example.customer.model.TimePickerModel
+import com.example.customer.model.ViewOrderFoodModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,15 +18,37 @@ class ShareViewModel @Inject constructor() : ViewModel() {
         statePhoneNumber = newPhone
     }
 
-    val dataListFood: MutableList<String> = mutableStateListOf()
+    private val _dataListFood: MutableList<String> = mutableStateListOf()
+    val dataListFood : MutableList<String> = _dataListFood
+
     fun addDataListFood(listFood: String){
-        dataListFood.add(listFood)
+        _dataListFood.add(listFood)
     }
 
     fun removeDataListFood(listFood: String){
-        dataListFood.remove(listFood)
+        _dataListFood.remove(listFood)
     }
 
-    private val _uiState = MutableStateFlow(String)
-    val uiState: StateFlow<String.Companion> = _uiState.asStateFlow()
+    private val _dataTimePicker = mutableStateOf<TimePickerModel?>(null)
+    val dataTimePicker : MutableState<TimePickerModel?> =  _dataTimePicker
+
+    fun setTimePicker(mHour: Int, mMinius: Int, mTimeSet: String) {
+        _dataTimePicker.value = TimePickerModel(mHour,mMinius, mTimeSet = mTimeSet)
+    }
+
+
+    private val _dataDatePicker= mutableStateOf<DatePickerModel?>(null)
+    val dataDatePicker : MutableState<DatePickerModel?> = _dataDatePicker
+
+    fun setDatePicker(mYear: Int, mMonth: Int, mDay: Int) {
+        _dataDatePicker.value = DatePickerModel(mYear,mMonth,mDay = mDay)
+    }
+
+    var orderFoods by mutableStateOf<ViewOrderFoodModel?>(null)
+        private set
+
+    fun shareOrderFood(orderFood: ViewOrderFoodModel) {
+        orderFoods = orderFood
+    }
+
 }
