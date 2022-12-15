@@ -105,7 +105,6 @@ fun CustomFoodOtherScreen(
                 }
             }
         }
-        val selectedItems = getSelectedItems().map { it.name }
     }
 }
 

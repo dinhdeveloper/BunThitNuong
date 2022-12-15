@@ -3,10 +3,8 @@ package com.example.customer.navigation
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.example.customer.main.view.sign_in_up.IPPhoneScreen
 import com.example.customer.main.view.sign_in_up.SignUpScreen
 import com.example.customer.viewmodel.ShareViewModel
@@ -25,7 +23,7 @@ fun NavigationLogin(
             IPPhoneScreen(navController, shareViewModel)
         }
         composable(Screen.SignUpScreen.route) {
-            SignUpScreen(navController, shareViewModel)
+            SignUpScreen(shareViewModel)
         }
 
 

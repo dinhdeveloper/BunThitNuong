@@ -30,7 +30,7 @@ fun CustomDatePicker(
     val sDate = remember { mutableStateOf("$mDay") }
     val sMouth = remember { mutableStateOf("$mMonth") }
     val sYear = remember { mutableStateOf("$mYear") }
-
+    shareViewModel.setDatePicker(sYear.value.toInt(), sMouth.value.toInt(), sDate.value.toInt())
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,

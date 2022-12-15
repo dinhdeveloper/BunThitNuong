@@ -10,9 +10,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.customer.main.view.sign_in_up.IPPhoneScreen
 import com.example.customer.navigation.NavigationLogin
-import com.example.customer.navigation.NavigationSetup
 import com.example.customer.ui.theme.BunThitNuongTheme
 
 class SignInUpActivity : ComponentActivity() {

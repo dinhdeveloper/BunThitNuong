@@ -1,6 +1,5 @@
 package com.example.customer.ui.screen.home
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -26,7 +25,6 @@ import com.example.customer.model.ViewOrderFoodModel
 import com.example.customer.navigation.Screen
 import com.example.customer.ui.theme.bgOgran
 import com.example.customer.viewmodel.ShareViewModel
-import com.google.gson.Gson
 import dinhtc.android.customer.R
 
 @Composable
@@ -37,7 +35,6 @@ fun HomeScreen(
     var textCountAll by remember { mutableStateOf(1) }
     var textMoneySize by remember { mutableStateOf(30000) }
     var statusFoodSize by remember { mutableStateOf("Phần Nhỏ") }
-    val foodOtherChoose = remember { mutableStateListOf<FoodChooseModel?>(null) }
 
     ConstraintLayout {
         val horizontalGuide25 = createGuidelineFromTop(0.25f)
@@ -165,12 +162,12 @@ fun HomeScreen(
                             .padding(horizontal = 5.dp)
                             .height(40.dp),
                         onClick = {
-                            var timePicker =
-                                "${shareViewModel.dataTimePicker.value?.mHour}-${shareViewModel.dataTimePicker.value?.mMinius}-${shareViewModel.dataTimePicker.value?.mTimeSet}"
+                            val timePicker =
+                                "${shareViewModel.dataTimePicker.value?.mHour} : ${shareViewModel.dataTimePicker.value?.mMinius} : ${shareViewModel.dataTimePicker.value?.mTimeSet}"
 
-                            var datePicker =
-                                "${shareViewModel.dataDatePicker.value?.mDay}-${shareViewModel.dataDatePicker.value?.mMonth}-${shareViewModel.dataDatePicker.value?.mYear}"
-                            var orderFood = ViewOrderFoodModel(
+                            val datePicker =
+                                "${shareViewModel.dataDatePicker.value?.mDay} - ${shareViewModel.dataDatePicker.value?.mMonth} - ${shareViewModel.dataDatePicker.value?.mYear}"
+                            val orderFood = ViewOrderFoodModel(
                                 statusFoodSize,
                                 textCountAll,
                                 textMoneySize * textCountAll,

@@ -2,8 +2,6 @@ package com.example.customer.main.view.sign_in_up
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -19,22 +17,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.customer.common.otp_pin.LineOtpView
 import com.example.customer.main.activity.MainActivity
-import com.example.customer.main.activity.SignInUpActivity
 import com.example.customer.ui.theme.Black
 import com.example.customer.viewmodel.ShareViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SignUpScreen(
-    navController: NavController,
     shareViewModel: ShareViewModel
 ) {
     val activity = (LocalContext.current as? Activity)
 
-    var phoneNumber = shareViewModel.statePhoneNumber
+    val phoneNumber = shareViewModel.statePhoneNumber
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(

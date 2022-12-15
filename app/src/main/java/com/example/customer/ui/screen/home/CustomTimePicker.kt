@@ -1,9 +1,6 @@
 package com.example.customer.ui.screen.home
 
-import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.util.Log
-import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,7 +28,9 @@ fun CustomTimePicker(
     var showDiaLogTime by remember { mutableStateOf(false) }
     val sHour = remember { mutableStateOf("$mHour") }
     val sMinute = remember { mutableStateOf("$mMinute") }
-    val timeSet = remember { mutableStateOf("$mTimeSet") }
+    val timeSet = remember { mutableStateOf(mTimeSet) }
+
+    shareViewModel.setTimePicker(sHour.value.toInt(), sMinute.value.toInt(), timeSet.value)
 
     Column(
         verticalArrangement = Arrangement.Center,

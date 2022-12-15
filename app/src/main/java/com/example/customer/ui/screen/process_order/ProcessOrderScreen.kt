@@ -24,7 +24,10 @@ fun ProcessOrderScreen(
     LazyColumn(modifier = Modifier.background(colorBg).fillMaxSize()) {
         item {
             ToolBarScreen(
-                textToolbar = "Thông Tin Đơn Hàng"
+                textToolbar = "Thông Tin Đơn Hàng",
+                onBack = {
+                    navController.popBackStack()
+                }
             )
         }
     }

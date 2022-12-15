@@ -12,9 +12,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.customer.ui.theme.*
 import dinhtc.android.customer.R
 
@@ -22,13 +19,11 @@ import dinhtc.android.customer.R
 @Composable
 fun PreviewNavigationDrawer() {
     NavigationDrawer(
-        navController = rememberNavController()
     )
 }
 
 @Composable
 fun NavigationDrawer(
-    navController: NavController
 ) {
     Column(
         modifier = Modifier

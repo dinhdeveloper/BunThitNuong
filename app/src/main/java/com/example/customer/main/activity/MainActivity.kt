@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.ui.Modifier
-import com.example.customer.main.view.MainScreen
+import androidx.navigation.compose.rememberNavController
+import com.example.customer.navigation.NavigationSetup
 import com.example.customer.ui.theme.BunThitNuongTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +20,13 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MainScreen()
+                    val navController = rememberNavController()
+                    Scaffold(
+                        content = {
+                            NavigationSetup(
+                                navController = navController
+                            )
+                        })
                 }
             }
         }

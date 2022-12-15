@@ -40,7 +40,6 @@ fun IPPhoneScreen(
     navController: NavController,
     shareViewModel: ShareViewModel
 ) {
-    val activity = (LocalContext.current as? Activity)
     val keyboardController = LocalSoftwareKeyboardController.current
     var showWebView by remember { mutableStateOf(false) }
     var colorT by remember { mutableStateOf(colorToolbar) }

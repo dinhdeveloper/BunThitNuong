@@ -29,7 +29,7 @@ fun NavigationSetup(
         }
 
         composable(Screen.NavigationDrawer.route) {
-            NavigationDrawer(navController)
+            NavigationDrawer()
         }
 
         composable(Screen.CartBagScreen.route) {

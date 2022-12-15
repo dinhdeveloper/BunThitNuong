@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.customer.main.activity.MainActivity
 import com.example.customer.main.activity.SignInUpActivity
 import com.example.customer.ui.theme.colorToolbar
 import kotlinx.coroutines.delay
