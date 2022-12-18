@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.customer.model.FoodChooseModel
 import com.example.customer.model.FoodOtherModel
 import com.example.customer.model.ViewOrderFoodModel
 import com.example.customer.navigation.Screen

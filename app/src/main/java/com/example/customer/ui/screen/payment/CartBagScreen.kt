@@ -1,23 +1,31 @@
 package com.example.customer.ui.screen.payment
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Card
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Green
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -39,10 +47,18 @@ fun CartBagScreen(
         ToolBarScreen(
             textToolbar = "Giỏ Hàng",
             onBack = {
+                clearData(shareViewModel)
                 navController.popBackStack()
             }
         )
         CusTomViewCart(shareViewModel)
+    }
+}
+
+fun clearData(shareViewModel: ShareViewModel) {
+    shareViewModel.orderFoods.value?.listFood = emptyList()
+    for (data in shareViewModel.orderFoods.value?.listFood!!){
+        shareViewModel.removeDataListFood(data)
     }
 }
 
@@ -54,6 +70,7 @@ fun CusTomViewCartPreview() {
 
 @Composable
 fun CusTomViewCart(shareViewModel: ShareViewModel) {
+    var showDialog by remember { mutableStateOf(false) }
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -77,7 +94,7 @@ fun CusTomViewCart(shareViewModel: ShareViewModel) {
                         top.linkTo(horizontalGuide)
                     }
                     .padding(20.dp)
-                    .height(300.dp)
+                    .height(400.dp)
                     .fillMaxSize()
                     .padding(bottom = 20.dp),
                 elevation = 10.dp,
@@ -99,12 +116,12 @@ fun CusTomViewCart(shareViewModel: ShareViewModel) {
                         Modifier.padding(vertical = 5.dp)
                     ) {
                         Text(
-                            text = "${shareViewModel.orderFoods?.statusFoodSize}:",
+                            text = "${shareViewModel.orderFoods.value?.statusFoodSize}:",
                             modifier = Modifier.weight(1f)
                         )
 
                         Text(
-                            text = "${shareViewModel.orderFoods?.countAll} phần",
+                            text = "${shareViewModel.orderFoods.value?.countAll} phần",
                             textAlign = TextAlign.Start,
                             modifier = Modifier.weight(1f)
                         )
@@ -118,7 +135,7 @@ fun CusTomViewCart(shareViewModel: ShareViewModel) {
                         )
 
                         Text(
-                            text = "${shareViewModel.orderFoods?.datePicker}",
+                            text = "${shareViewModel.orderFoods.value?.datePicker}",
                             textAlign = TextAlign.Start,
                             modifier = Modifier.weight(1f)
                         )
@@ -132,12 +149,12 @@ fun CusTomViewCart(shareViewModel: ShareViewModel) {
                         )
 
                         Text(
-                            text = "${shareViewModel.orderFoods?.timePicker}",
+                            text = "${shareViewModel.orderFoods.value?.timePicker}",
                             textAlign = TextAlign.Start,
                             modifier = Modifier.weight(1f)
                         )
                     }
-                    if (shareViewModel.orderFoods?.listFood?.size!! > 0){
+                    if (shareViewModel.orderFoods.value?.listFood?.isNotEmpty() == true){
                         Row(
                             Modifier.padding(vertical = 5.dp)
                         ) {
@@ -145,14 +162,29 @@ fun CusTomViewCart(shareViewModel: ShareViewModel) {
                                 text = "Món Đi Kèm:",
                                 modifier = Modifier.weight(1f)
                             )
-                            Column {
-                                for (data in shareViewModel.orderFoods?.listFood!!){
+                            Column(Modifier.padding(bottom = 20.dp)) {
+                                for (data in shareViewModel.orderFoods.value?.listFood!!){
                                     Text(
                                         text = "- $data"
                                     )
                                 }
                             }
                         }
+                    }
+
+                    Button(
+                        onClick = {
+                            showDialog = true
+                        },
+                        shape = RoundedCornerShape(35.dp),
+                        border = BorderStroke(1.dp, Color.Red),
+                        colors = ButtonDefaults.buttonColors(contentColor = Color.Red, backgroundColor = Color.White)
+                    ) {
+                        Text(
+                            text = "Đặt Hàng",
+                            fontSize = 16.sp,
+                            modifier = Modifier.padding(horizontal = 40.dp, vertical = 4.dp)
+                        )
                     }
                 }
             }
@@ -171,6 +203,73 @@ fun CusTomViewCart(shareViewModel: ShareViewModel) {
                         bottom.linkTo(viewBottom.top)
                     }
             )
+        }
+        if(showDialog){
+            Dialog(onDismissRequest = { showDialog = false }, DialogProperties(
+                dismissOnBackPress = false,dismissOnClickOutside = false
+            )) {
+                CircularProgressIndicator(
+                    modifier = Modifier,
+                    color = bgOgran,
+                    strokeWidth = 2.dp
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun RoundedCircularProgress(
+    progress: Float,
+    strokeWidth: Dp,
+    progressColor: Color,
+    modifier: Modifier = Modifier
+) {
+    Box(modifier = modifier.size(100.dp)) {
+        // circle progress
+        CircularProgressIndicator(
+            progress = progress,
+            color = progressColor,
+            strokeWidth = strokeWidth,
+            modifier = Modifier.fillMaxSize()
+        )
+        // start circle
+        Spacer(modifier = Modifier
+            .fillMaxSize()
+            .wrapContentSize(align = Alignment.TopCenter)
+            .size(strokeWidth)
+            .background(progressColor, CircleShape)
+        )
+        // end circle
+        Spacer(modifier = Modifier
+            .fillMaxSize()
+            .rotate(360 * progress)
+            .wrapContentSize(align = Alignment.TopCenter)
+            .size(strokeWidth)
+            .background(progressColor, CircleShape)
+        )
+    }
+}
+
+@Composable
+fun ShowLoading(){
+    Box(
+        modifier = Modifier.size(60.dp).background(bgTransient, shape = RoundedCornerShape(8.dp)),
+        contentAlignment= Alignment.Center,
+    ){
+        Box(contentAlignment = Alignment.Center) {
+            CircularProgressIndicator(
+                progress = 0.45f,
+                color = Red,
+                modifier = Modifier.then(Modifier.size(20.dp)))
+            CircularProgressIndicator(
+                progress = 0.55f,
+                color = Green,
+                modifier = Modifier.then(Modifier.size(40.dp)))
+            CircularProgressIndicator(
+                progress = 0.75f,
+                color = Blue,
+                modifier = Modifier.then(Modifier.size(60.dp)))
         }
     }
 }

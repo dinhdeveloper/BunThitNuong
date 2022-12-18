@@ -19,7 +19,7 @@ class ShareViewModel @Inject constructor() : ViewModel() {
     }
 
     private val _dataListFood: MutableList<String> = mutableStateListOf()
-    val dataListFood : MutableList<String> = _dataListFood
+    var dataListFood : MutableList<String> = _dataListFood
 
     fun addDataListFood(listFood: String){
         _dataListFood.add(listFood)
@@ -44,11 +44,10 @@ class ShareViewModel @Inject constructor() : ViewModel() {
         _dataDatePicker.value = DatePickerModel(mYear,mMonth,mDay = mDay)
     }
 
-    var orderFoods by mutableStateOf<ViewOrderFoodModel?>(null)
-        private set
+    var orderFoods = mutableStateOf<ViewOrderFoodModel?>(null)
 
     fun shareOrderFood(orderFood: ViewOrderFoodModel) {
-        orderFoods = orderFood
+        orderFoods.value = orderFood
     }
 
 }
